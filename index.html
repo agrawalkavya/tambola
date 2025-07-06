@@ -10,9 +10,32 @@
   <div class="container">
     <header>
       <h1>Tambola Ticket</h1>
-      <button id="refreshBtn" title="New Ticket">🔄</button>
+      <div class="selectors">
+        <label>Ticket Color:
+          <select id="colorPicker">
+            <option value="yellow">Yellow</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="pink">Pink</option>
+            <option value="gray">Gray</option>
+          </select>
+        </label>
+        <label>Text Color:
+          <select id="textColorPicker">
+            <option value="black">Black</option>
+            <option value="darkblue">Dark Blue</option>
+          </select>
+        </label>
+        <button id="refreshBtn" title="New Ticket">🔄</button>
+      </div>
     </header>
-    <div id="ticket"></div>
+    <div id="ticketWrapper">
+      <div class="ticket-header">
+        <span id="ticketNo">Ticket No: 1</span>
+        <span class="site-name">TambolaTickets.com</span>
+      </div>
+      <div id="ticket"></div>
+    </div>
     <button id="startGameBtn">Start Game</button>
     <div id="claims">
       <h2>Claims</h2>
