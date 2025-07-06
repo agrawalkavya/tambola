@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tambola Ticket Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Tambola Ticket</h1>
+      <button id="refreshBtn" title="New Ticket">🔄</button>
+    </header>
+    <div id="ticket"></div>
+    <button id="startGameBtn">Start Game</button>
+    <div id="claims">
+      <h2>Claims</h2>
+      <ul>
+        <li><label><input type="checkbox" data-claim="earlySeven"> Early Seven</label></li>
+        <li><label><input type="checkbox" data-claim="corners"> Corners</label></li>
+        <li><label><input type="checkbox" data-claim="line1"> Line 1</label></li>
+        <li><label><input type="checkbox" data-claim="line2"> Line 2</label></li>
+        <li><label><input type="checkbox" data-claim="line3"> Line 3</label></li>
+        <li><label><input type="checkbox" data-claim="fullHouse"> Full House</label></li>
+      </ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,114 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 420px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 16px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#refreshBtn {
+  font-size: 1.5em;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#refreshBtn:hover {
+  background: #bdbdbd;
+}
+#ticket {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(3, 48px);
+  gap: 4px;
+  background: #e3eafc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+}
+.cell.blank {
+  background: transparent;
+  cursor: default;
+}
+.cell.crossed {
+  background: #bdbdbd;
+  color: #fff;
+  text-decoration: line-through;
+}
+#startGameBtn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#startGameBtn:active {
+  background: #0d47a1;
+}
+#claims {
+  margin-top: 10px;
+}
+#claims h2 {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+#claims ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#claims li {
+  margin-bottom: 6px;
+  font-size: 1em;
+}
+#claims input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 8px;
+}
+.claim-active label {
+  color: #388e3c;
+  font-weight: bold;
+}
+.claim-ticked label {
+  text-decoration: line-through;
+  color: #b71c1c;
+}
+@media (max-width: 500px) {
+  .container {
+    max-width: 98vw;
+    padding: 6px;
+  }
+  #ticket {
+    grid-template-rows: repeat(3, 36px);
+  }
+} 
