@@ -5,10 +5,15 @@ const refreshBtn = document.getElementById('refreshBtn');
 const startGameBtn = document.getElementById('startGameBtn');
 const claimsDiv = document.getElementById('claims');
 const claimCheckboxes = claimsDiv.querySelectorAll('input[type="checkbox"]');
+const colorPicker = document.getElementById('colorPicker');
+const textColorPicker = document.getElementById('textColorPicker');
+const ticketWrapper = document.getElementById('ticketWrapper');
+const ticketNoSpan = document.getElementById('ticketNo');
 
 let ticket = [];
 let gameStarted = false;
 let crossed = Array.from({ length: 3 }, () => Array(9).fill(false));
+let ticketNumber = 1;
 
 function generateTicket() {
   // Column ranges: [1-10], [11-20], ..., [81-90]
@@ -98,28 +103,29 @@ function crossNumber(row, col, cell) {
 function resetClaims() {
   claimCheckboxes.forEach(cb => {
     cb.checked = false;
-    cb.parentElement.parentElement.classList.remove('claim-active', 'claim-ticked');
+    cb.parentElement.parentElement.classList.remove('claim-active', 'claim-ticked', 'claim-flash');
   });
 }
 
 function updateClaims() {
   // Early Seven: 7 numbers crossed
   const crossedCount = crossed.flat().filter(Boolean).length;
-  const allNumbers = [];
-  for (let row = 0; row < 3; row++)
-    for (let col = 0; col < 9; col++)
-      if (ticket[row][col] !== null) allNumbers.push([row, col]);
-
-  // Corners: 4 corners crossed (first and last cell of first and last row that are numbers)
-  const corners = [
-    [0, 0], [0, 8], [2, 0], [2, 8]
-  ].filter(([r, c]) => ticket[r][c] !== null);
-
+  // Corners: first and last number in first and third rows
+  function getRowNumbers(row) {
+    return ticket[row].map((v, c) => v !== null ? {col: c, val: v} : null).filter(Boolean);
+  }
+  let cornersCells = [];
+  [0,2].forEach(row => {
+    const nums = getRowNumbers(row);
+    if (nums.length > 0) {
+      cornersCells.push([row, nums[0].col]);
+      if (nums.length > 1) cornersCells.push([row, nums[nums.length-1].col]);
+    }
+  });
   // Lines: all 5 numbers in a row crossed
   const lines = [0, 1, 2].map(r =>
     ticket[r].map((v, c) => v !== null && crossed[r][c]).filter(Boolean).length === 5
   );
-
   // Full House: all 15 numbers crossed
   const fullHouse = crossedCount === 15;
 
@@ -131,7 +137,7 @@ function updateClaims() {
         active = crossedCount >= 7;
         break;
       case 'corners':
-        active = corners.length === 4 && corners.every(([r, c]) => crossed[r][c]);
+        active = cornersCells.length === 4 && cornersCells.every(([r, c]) => crossed[r][c]);
         break;
       case 'line1':
         active = lines[0];
@@ -147,6 +153,10 @@ function updateClaims() {
         break;
     }
     if (active && !cb.checked) {
+      if (!li.classList.contains('claim-active')) {
+        li.classList.add('claim-flash');
+        setTimeout(() => li.classList.remove('claim-flash'), 1400);
+      }
       li.classList.add('claim-active');
     } else {
       li.classList.remove('claim-active');
@@ -160,7 +170,7 @@ claimCheckboxes.forEach(cb => {
     const li = cb.parentElement.parentElement;
     if (cb.checked) {
       li.classList.add('claim-ticked');
-      li.classList.remove('claim-active');
+      li.classList.remove('claim-active', 'claim-flash');
     } else {
       li.classList.remove('claim-ticked');
     }
@@ -174,9 +184,13 @@ function newTicket() {
   startGameBtn.disabled = false;
   resetClaims();
   renderTicket();
+  ticketNoSpan.textContent = 'Ticket No: ' + ticketNumber;
 }
 
-refreshBtn.addEventListener('click', newTicket);
+refreshBtn.addEventListener('click', () => {
+  ticketNumber = Math.floor(Math.random() * 1000) + 1;
+  newTicket();
+});
 
 startGameBtn.addEventListener('click', () => {
   gameStarted = true;
@@ -184,4 +198,19 @@ startGameBtn.addEventListener('click', () => {
   renderTicket();
 });
 
-window.onload = newTicket; 
+colorPicker.addEventListener('change', updateTicketColor);
+textColorPicker.addEventListener('change', updateTicketColor);
+
+function updateTicketColor() {
+  const color = colorPicker.value;
+  const textColor = textColorPicker.value;
+  ticketWrapper.className = '';
+  ticketWrapper.classList.add('ticket-' + color);
+  ticketWrapper.classList.add('text-' + textColor);
+}
+
+window.onload = () => {
+  ticketNumber = Math.floor(Math.random() * 1000) + 1;
+  newTicket();
+  updateTicketColor();
+}; 
