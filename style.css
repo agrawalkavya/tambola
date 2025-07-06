@@ -5,7 +5,7 @@ body {
   padding: 0;
 }
 .container {
-  max-width: 420px;
+  max-width: 440px;
   margin: 20px auto;
   background: #fff;
   border-radius: 12px;
@@ -14,45 +14,77 @@ body {
 }
 header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+header h1 {
+  margin: 0 0 4px 0;
+  font-size: 1.3em;
+}
+.selectors {
+  display: flex;
+  gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 #refreshBtn {
-  font-size: 1.5em;
+  font-size: 1.3em;
   background: #e0e0e0;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
   transition: background 0.2s;
 }
 #refreshBtn:hover {
   background: #bdbdbd;
 }
-#ticket {
-  margin: 20px 0;
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(3, 48px);
-  gap: 4px;
-  background: #e3eafc;
+#ticketWrapper {
+  margin: 18px 0 18px 0;
   border-radius: 8px;
   overflow: hidden;
+  border: 3px solid #bdbdbd;
+  box-shadow: 0 2px 8px #0002;
+}
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3e9c7;
+  border-bottom: 2px solid #bdbdbd;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 6px 12px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.site-name {
+  font-size: 0.95em;
+  font-weight: normal;
+}
+#ticket {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(3, 44px);
+  background: none;
 }
 .cell {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3em;
-  background: #fff;
-  border-radius: 4px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border: 1.5px solid #888;
+  background: transparent;
   cursor: pointer;
   user-select: none;
   transition: background 0.2s, color 0.2s;
+  min-width: 28px;
 }
 .cell.blank {
   background: transparent;
+  border: 1.5px solid #e0e0e0;
   cursor: default;
 }
 .cell.crossed {
@@ -90,6 +122,7 @@ header {
 #claims li {
   margin-bottom: 6px;
   font-size: 1em;
+  transition: background 0.3s;
 }
 #claims input[type="checkbox"] {
   transform: scale(1.2);
@@ -103,12 +136,40 @@ header {
   text-decoration: line-through;
   color: #b71c1c;
 }
+.claim-flash {
+  animation: flash 0.7s linear 2;
+  background: #fff59d;
+}
+@keyframes flash {
+  0% { background: #fff59d; }
+  50% { background: #ffeb3b; }
+  100% { background: #fff59d; }
+}
+/* Ticket color themes */
+.ticket-yellow { background: #fff9c4; border-color: #e6c200 !important; }
+.ticket-blue   { background: #bbdefb; border-color: #1976d2 !important; }
+.ticket-green  { background: #dcedc8; border-color: #689f38 !important; }
+.ticket-pink   { background: #f8bbd0; border-color: #c2185b !important; }
+.ticket-gray   { background: #f5f5f5; border-color: #757575 !important; }
+.ticket-yellow .ticket-header { background: #fff59d; }
+.ticket-blue .ticket-header   { background: #90caf9; }
+.ticket-green .ticket-header  { background: #aed581; }
+.ticket-pink .ticket-header   { background: #f48fb1; }
+.ticket-gray .ticket-header   { background: #eeeeee; }
+/* Text color themes */
+.text-black { color: #222 !important; }
+.text-darkblue { color: #0d2357 !important; }
+#ticket .cell { font-family: 'Segoe UI', Arial, sans-serif; }
 @media (max-width: 500px) {
   .container {
-    max-width: 98vw;
-    padding: 6px;
+    max-width: 99vw;
+    padding: 4px;
   }
   #ticket {
-    grid-template-rows: repeat(3, 36px);
+    grid-template-rows: repeat(3, 32px);
+  }
+  .ticket-header {
+    font-size: 0.95em;
+    padding: 4px 4px;
   }
 } 
